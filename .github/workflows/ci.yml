@@ -51,7 +51,7 @@ env:
   CI: true
   NODE_VERSION: "22"
   PNPM_VERSION: "11.1.1"
-  NEXT_PUBLIC_SITE_URL: https://web-clipboard.vercel.app
+  NEXT_PUBLIC_SITE_URL: https://web-clipboard-five.vercel.app
 
 jobs:
   quality:

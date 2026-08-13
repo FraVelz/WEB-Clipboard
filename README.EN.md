@@ -4,7 +4,7 @@ This document is in English. [Versión en español](./README.md)
 
 **Paste clipboard screenshots, browse them, and manage titles. Everything stays in this browser only.**
 
-**Published site:** [web-clipboard.vercel.app](https://web-clipboard.vercel.app)
+**Published site:** [web-clipboard-five.vercel.app](https://web-clipboard-five.vercel.app)
 
 Built with **Next.js 16** (App Router), **React 19**, **TypeScript**, **Tailwind CSS v4**, and **pnpm**.
 
@@ -49,7 +49,7 @@ Open [http://localhost:3000](http://localhost:3000).
 
 | Variable               | Use                                                                                                                      |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| `NEXT_PUBLIC_SITE_URL` | Canonical URL (metadata / CI). Defaults to `http://localhost:3000` locally and `https://web-clipboard.vercel.app` in CI. |
+| `NEXT_PUBLIC_SITE_URL` | Canonical URL (metadata / CI). Defaults to `http://localhost:3000` locally and `https://web-clipboard-five.vercel.app` in CI. |
 
 No `.env` file is required to use the app.
 

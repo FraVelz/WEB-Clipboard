@@ -4,7 +4,7 @@
 
 **Pega capturas del portapapeles, visualízalas y gestiona títulos. Todo se guarda solo en este navegador.**
 
-**Sitio publicado:** [web-clipboard.vercel.app](https://web-clipboard.vercel.app)
+**Sitio publicado:** [web-clipboard-five.vercel.app](https://web-clipboard-five.vercel.app)
 
 Hecho con **Next.js 16** (App Router), **React 19**, **TypeScript**, **Tailwind CSS v4** y **pnpm**.
 
@@ -49,7 +49,7 @@ Abre [http://localhost:3000](http://localhost:3000).
 
 | Variable               | Uso                                                                                                                    |
 | ---------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| `NEXT_PUBLIC_SITE_URL` | URL canónica (metadata / CI). Por defecto `http://localhost:3000` en local y `https://web-clipboard.vercel.app` en CI. |
+| `NEXT_PUBLIC_SITE_URL` | URL canónica (metadata / CI). Por defecto `http://localhost:3000` en local y `https://web-clipboard-five.vercel.app` en CI. |
 
 No hace falta `.env` para usar la app.
 
