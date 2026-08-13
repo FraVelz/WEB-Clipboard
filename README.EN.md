@@ -47,8 +47,8 @@ Open [http://localhost:3000](http://localhost:3000).
 
 **Environment (optional):**
 
-| Variable               | Use                                                                                                                      |
-| ---------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| Variable               | Use                                                                                                                           |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
 | `NEXT_PUBLIC_SITE_URL` | Canonical URL (metadata / CI). Defaults to `http://localhost:3000` locally and `https://web-clipboard-five.vercel.app` in CI. |
 
 No `.env` file is required to use the app.

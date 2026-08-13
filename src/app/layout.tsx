@@ -22,7 +22,11 @@ export const metadata: Metadata = {
     "Guarda capturas del portapapeles en este navegador y visualízalas en local.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
     <html
       lang="es"
