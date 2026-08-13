@@ -1,10 +1,5 @@
+import { ClipboardApp } from "@/components/ClipboardApp";
+
 export default function Home() {
-  return (
-    <main className="flex flex-1 flex-col items-center justify-center px-6 py-16">
-      <h1 className="text-2xl font-semibold tracking-tight">WEB-Clipboard</h1>
-      <p className="mt-2 max-w-md text-center text-zinc-600 dark:text-zinc-400">
-        App local para pegar y guardar capturas del portapapeles.
-      </p>
-    </main>
-  );
+  return <ClipboardApp />;
 }
