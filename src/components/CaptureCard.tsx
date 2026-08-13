@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { CheckIcon, PencilIcon, TrashIcon, XIcon } from "@/components/icons";
+import { useObjectUrl } from "@/hooks/useObjectUrl";
 import { cn } from "@/lib/cn";
 import type { CaptureRecord } from "@/lib/captures-db";
 
@@ -18,20 +19,10 @@ export function CaptureCard({
   onRename,
   onDelete,
 }: CaptureCardProps) {
-  const [src, setSrc] = useState<string | null>(null);
+  const src = useObjectUrl(capture.blob);
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(capture.title);
   const [confirmDelete, setConfirmDelete] = useState(false);
-
-  useEffect(() => {
-    const url = URL.createObjectURL(capture.blob);
-    setSrc(url);
-    return () => URL.revokeObjectURL(url);
-  }, [capture.blob]);
-
-  useEffect(() => {
-    setDraft(capture.title);
-  }, [capture.title]);
 
   const formatted = new Intl.DateTimeFormat("es", {
     dateStyle: "medium",
@@ -102,7 +93,10 @@ export function CaptureCard({
               type="button"
               aria-label="Editar título"
               className="text-muted hover:bg-surface-hover hover:text-text rounded-md p-1"
-              onClick={() => setEditing(true)}
+              onClick={() => {
+                setDraft(capture.title);
+                setEditing(true);
+              }}
             >
               <PencilIcon className="size-4" />
             </button>

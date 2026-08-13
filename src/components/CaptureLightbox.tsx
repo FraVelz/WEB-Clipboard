@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { XIcon } from "@/components/icons";
+import { useObjectUrl } from "@/hooks/useObjectUrl";
 import type { CaptureRecord } from "@/lib/captures-db";
 
 type CaptureLightboxProps = {
@@ -10,18 +11,7 @@ type CaptureLightboxProps = {
 };
 
 export function CaptureLightbox({ capture, onClose }: CaptureLightboxProps) {
-  const [src, setSrc] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (!capture) {
-      setSrc(null);
-      return;
-    }
-
-    const url = URL.createObjectURL(capture.blob);
-    setSrc(url);
-    return () => URL.revokeObjectURL(url);
-  }, [capture]);
+  const src = useObjectUrl(capture?.blob);
 
   useEffect(() => {
     if (!capture) return;
