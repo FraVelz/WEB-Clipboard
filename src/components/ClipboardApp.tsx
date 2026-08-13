@@ -38,7 +38,11 @@ export function ClipboardApp() {
         onReorder={reorder}
       />
 
-      <CaptureLightbox capture={open} onClose={() => setOpen(null)} />
+      <CaptureLightbox
+        key={open?.id ?? "closed"}
+        capture={open}
+        onClose={() => setOpen(null)}
+      />
     </main>
   );
 }
