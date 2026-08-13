@@ -5,6 +5,7 @@ import {
   addCapture,
   deleteCapture,
   listCaptures,
+  reorderCaptures,
   updateCaptureTitle,
   type CaptureRecord,
 } from "@/lib/captures-db";
@@ -44,7 +45,13 @@ export function useCaptures() {
   const save = useCallback(
     async (input: { title: string; blob: Blob; mimeType: string }) => {
       const record = await addCapture(input);
-      setCaptures((current) => [record, ...current]);
+      setCaptures((current) => [
+        record,
+        ...current.map((item) => ({
+          ...item,
+          position: item.position + 1,
+        })),
+      ]);
       return record;
     },
     [],
@@ -62,5 +69,18 @@ export function useCaptures() {
     setCaptures((current) => current.filter((item) => item.id !== id));
   }, []);
 
-  return { captures, ready, error, save, rename, remove };
+  const reorder = useCallback(async (orderedIds: string[]) => {
+    setCaptures((current) => {
+      const byId = new Map(current.map((item) => [item.id, item]));
+      return orderedIds
+        .map((id, position) => {
+          const item = byId.get(id);
+          return item ? { ...item, position } : null;
+        })
+        .filter((item): item is CaptureRecord => item !== null);
+    });
+    await reorderCaptures(orderedIds);
+  }, []);
+
+  return { captures, ready, error, save, rename, remove, reorder };
 }

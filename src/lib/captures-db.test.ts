@@ -4,6 +4,7 @@ import {
   addCapture,
   deleteCapture,
   listCaptures,
+  reorderCaptures,
   updateCaptureTitle,
 } from "./captures-db";
 
@@ -91,5 +92,32 @@ describe("captures-db", () => {
     await deleteCapture(drop.id);
     const listed = await listCaptures();
     expect(listed.map((item) => item.id)).toEqual([keep.id]);
+  });
+
+  it("reorders captures and persists the new order", async () => {
+    const first = await addCapture({
+      title: "first",
+      blob: pngBlob("first"),
+      mimeType: "image/png",
+    });
+    const second = await addCapture({
+      title: "second",
+      blob: pngBlob("second"),
+      mimeType: "image/png",
+    });
+    const third = await addCapture({
+      title: "third",
+      blob: pngBlob("third"),
+      mimeType: "image/png",
+    });
+
+    await reorderCaptures([first.id, third.id, second.id]);
+    const listed = await listCaptures();
+    expect(listed.map((item) => item.id)).toEqual([
+      first.id,
+      third.id,
+      second.id,
+    ]);
+    expect(listed.map((item) => item.position)).toEqual([0, 1, 2]);
   });
 });

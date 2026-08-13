@@ -8,7 +8,8 @@ import { useCaptures } from "@/hooks/useCaptures";
 import type { CaptureRecord } from "@/lib/captures-db";
 
 export function ClipboardApp() {
-  const { captures, ready, error, save, rename, remove } = useCaptures();
+  const { captures, ready, error, save, rename, remove, reorder } =
+    useCaptures();
   const [open, setOpen] = useState<CaptureRecord | null>(null);
 
   return (
@@ -17,6 +18,7 @@ export function ClipboardApp() {
         <h1 className="text-3xl font-semibold tracking-tight">WEB-Clipboard</h1>
         <p className="text-muted mt-1">
           Pega capturas del portapapeles. Se guardan solo en este navegador.
+          Arrastra el asa para reordenar.
         </p>
       </header>
 
@@ -33,6 +35,7 @@ export function ClipboardApp() {
           await remove(id);
           if (open?.id === id) setOpen(null);
         }}
+        onReorder={reorder}
       />
 
       <CaptureLightbox capture={open} onClose={() => setOpen(null)} />
