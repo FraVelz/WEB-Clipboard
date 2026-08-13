@@ -1,15 +1,29 @@
 "use client";
 
-import { useEffect, useMemo } from "react";
+import { useEffect, useState } from "react";
 
+/**
+ * Creates a blob: object URL for the given Blob and revokes it on cleanup.
+ * createObjectURL must run in an effect (not render); setState here syncs
+ * that external URL into React state.
+ */
 export function useObjectUrl(blob: Blob | null | undefined): string | null {
-  const url = useMemo(() => (blob ? URL.createObjectURL(blob) : null), [blob]);
+  const [url, setUrl] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!blob) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- object URL is an external browser resource
+      setUrl(null);
+      return;
+    }
+
+    const objectUrl = URL.createObjectURL(blob);
+    setUrl(objectUrl);
+
     return () => {
-      if (url) URL.revokeObjectURL(url);
+      URL.revokeObjectURL(objectUrl);
     };
-  }, [url]);
+  }, [blob]);
 
   return url;
 }

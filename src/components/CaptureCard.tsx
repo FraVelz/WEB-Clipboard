@@ -13,6 +13,12 @@ import { useObjectUrl } from "@/hooks/useObjectUrl";
 import { cn } from "@/lib/cn";
 import type { CaptureRecord } from "@/lib/captures-db";
 
+const captureDateFormatter = new Intl.DateTimeFormat("es", {
+  dateStyle: "medium",
+  timeStyle: "short",
+  timeZone: "UTC",
+});
+
 type CaptureCardProps = {
   capture: CaptureRecord;
   isDragging?: boolean;
@@ -66,10 +72,7 @@ export function CaptureCard({
     };
   }, [menuOpen]);
 
-  const formatted = new Intl.DateTimeFormat("es", {
-    dateStyle: "medium",
-    timeStyle: "short",
-  }).format(new Date(capture.createdAt));
+  const formatted = captureDateFormatter.format(new Date(capture.createdAt));
 
   async function saveTitle() {
     await onRename(draft.trim());

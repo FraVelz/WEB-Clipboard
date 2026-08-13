@@ -1,3 +1,16 @@
 {
-  "exclude": ["node_modules", ".next", "dist"]
+  "$schema": "https://react.doctor/schema/config.json",
+  "exclude": ["node_modules", ".next", "dist"],
+  "ignore": {
+    "rules": [],
+    "overrides": [
+      {
+        "files": [
+          "src/components/CaptureCard.tsx",
+          "src/components/CaptureLightbox.tsx"
+        ],
+        "rules": ["react-doctor/nextjs-no-img-element"]
+      }
+    ]
+  }
 }
