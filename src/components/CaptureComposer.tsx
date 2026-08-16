@@ -109,7 +109,8 @@ export function CaptureComposer({ onSave }: CaptureComposerProps) {
           título.
         </span>
         <span className="hidden sm:inline">
-          Pega con Ctrl+V o Cmd+V. Si el título está vacío, se guarda sin título.
+          Pega con Ctrl+V o Cmd+V. Si el título está vacío, se guarda sin
+          título.
         </span>
       </p>
       {message ? (

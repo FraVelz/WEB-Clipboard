@@ -1,6 +1,13 @@
 "use client";
 
-import { useEffect, useId, useRef, useState, type DragEvent } from "react";
+import {
+  useEffect,
+  useEffectEvent,
+  useId,
+  useRef,
+  useState,
+  type DragEvent,
+} from "react";
 import {
   CheckIcon,
   EllipsisIcon,
@@ -49,6 +56,10 @@ export function CaptureCard({
   const [draft, setDraft] = useState(capture.title);
   const [confirmDelete, setConfirmDelete] = useState(false);
 
+  const confirmDeleteCapture = useEffectEvent(() => {
+    void onDelete();
+  });
+
   useEffect(() => {
     if (!menuOpen) return;
 
@@ -70,7 +81,7 @@ export function CaptureCard({
       }
       if (event.key === "Enter" && confirmDelete) {
         event.preventDefault();
-        void onDelete();
+        confirmDeleteCapture();
       }
     };
 
@@ -80,7 +91,7 @@ export function CaptureCard({
       document.removeEventListener("mousedown", onPointer);
       document.removeEventListener("keydown", onKey);
     };
-  }, [menuOpen, confirmDelete, onDelete]);
+  }, [menuOpen, confirmDelete]);
 
   const formatted = captureDateFormatter.format(new Date(capture.createdAt));
 

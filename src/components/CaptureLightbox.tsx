@@ -186,8 +186,8 @@ export function CaptureLightbox({ capture, onClose }: CaptureLightboxProps) {
               Arrastra para mover · pellizca para zoom
             </span>
             <span className="hidden sm:inline">
-              Arrastra la imagen para moverla · rueda suave o pellizco para zoom ·
-              botones o +/− en el teclado
+              Arrastra la imagen para moverla · rueda suave o pellizco para zoom
+              · botones o +/− en el teclado
             </span>
           </p>
         </>
