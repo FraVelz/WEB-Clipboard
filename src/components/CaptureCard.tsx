@@ -43,6 +43,7 @@ export function CaptureCard({
   const src = useObjectUrl(capture.blob);
   const menuId = useId();
   const menuRef = useRef<HTMLDivElement>(null);
+  const skipBlurSaveRef = useRef(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(capture.title);
@@ -59,8 +60,17 @@ export function CaptureCard({
     };
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
+        event.preventDefault();
+        if (confirmDelete) {
+          setConfirmDelete(false);
+          return;
+        }
         setMenuOpen(false);
-        setConfirmDelete(false);
+        return;
+      }
+      if (event.key === "Enter" && confirmDelete) {
+        event.preventDefault();
+        void onDelete();
       }
     };
 
@@ -70,12 +80,21 @@ export function CaptureCard({
       document.removeEventListener("mousedown", onPointer);
       document.removeEventListener("keydown", onKey);
     };
-  }, [menuOpen]);
+  }, [menuOpen, confirmDelete, onDelete]);
 
   const formatted = captureDateFormatter.format(new Date(capture.createdAt));
 
+  function cancelEdit() {
+    skipBlurSaveRef.current = true;
+    setDraft(capture.title);
+    setEditing(false);
+  }
+
   async function saveTitle() {
-    await onRename(draft.trim());
+    const next = draft.trim();
+    if (next !== capture.title) {
+      await onRename(next);
+    }
     setEditing(false);
   }
 
@@ -106,6 +125,23 @@ export function CaptureCard({
               <input
                 value={draft}
                 onChange={(event) => setDraft(event.target.value)}
+                onBlur={() => {
+                  if (skipBlurSaveRef.current) {
+                    skipBlurSaveRef.current = false;
+                    return;
+                  }
+                  void saveTitle();
+                }}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter") {
+                    event.preventDefault();
+                    skipBlurSaveRef.current = true;
+                    void saveTitle();
+                  } else if (event.key === "Escape") {
+                    event.preventDefault();
+                    cancelEdit();
+                  }
+                }}
                 className="border-border bg-bg min-w-0 flex-1 rounded-md border px-2 py-1 text-sm"
                 aria-label="Editar título"
                 autoFocus
@@ -114,6 +150,7 @@ export function CaptureCard({
                 type="button"
                 aria-label="Guardar título"
                 className="text-success hover:bg-surface-hover rounded-md p-1"
+                onMouseDown={(event) => event.preventDefault()}
                 onClick={() => void saveTitle()}
               >
                 <CheckIcon className="size-4" />
@@ -122,10 +159,8 @@ export function CaptureCard({
                 type="button"
                 aria-label="Cancelar edición"
                 className="text-muted hover:bg-surface-hover rounded-md p-1"
-                onClick={() => {
-                  setDraft(capture.title);
-                  setEditing(false);
-                }}
+                onMouseDown={(event) => event.preventDefault()}
+                onClick={cancelEdit}
               >
                 <XIcon className="size-4" />
               </button>
@@ -163,13 +198,14 @@ export function CaptureCard({
               className="border-border bg-surface absolute top-full right-0 z-20 mt-1 min-w-40 rounded-lg border p-1 shadow-lg"
             >
               {confirmDelete ? (
-                <div className="space-y-1 px-2 py-1.5 text-sm">
+                <div className="space-y-2 px-2 py-1.5 text-sm">
                   <p>¿Borrar captura?</p>
                   <div className="flex gap-2">
                     <button
                       type="button"
                       role="menuitem"
-                      className="bg-accent-soft text-accent rounded-md px-2 py-1"
+                      autoFocus
+                      className="bg-accent-soft text-accent hover:bg-accent rounded-md px-2.5 py-1.5 font-medium transition-colors hover:text-white"
                       onClick={() => void onDelete()}
                     >
                       Confirmar
@@ -177,7 +213,7 @@ export function CaptureCard({
                     <button
                       type="button"
                       role="menuitem"
-                      className="text-muted hover:bg-surface-hover rounded-md px-2 py-1"
+                      className="text-muted hover:bg-surface-hover hover:text-text rounded-md px-2.5 py-1.5 transition-colors"
                       onClick={() => setConfirmDelete(false)}
                     >
                       Cancelar
@@ -191,6 +227,7 @@ export function CaptureCard({
                     role="menuitem"
                     className="hover:bg-surface-hover flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-left text-sm"
                     onClick={() => {
+                      skipBlurSaveRef.current = false;
                       setDraft(capture.title);
                       setEditing(true);
                       setMenuOpen(false);
