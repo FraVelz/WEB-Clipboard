@@ -22,9 +22,9 @@ type CaptureGalleryProps = {
 const COLUMN_OPTIONS: GalleryColumns[] = [3, 4, 5];
 
 const GRID_COLS: Record<GalleryColumns, string> = {
-  3: "sm:grid-cols-3",
-  4: "sm:grid-cols-4",
-  5: "sm:grid-cols-5",
+  3: "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3",
+  4: "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4",
+  5: "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5",
 };
 
 function moveItem(ids: string[], fromId: string, toId: string): string[] {
@@ -58,7 +58,7 @@ export function CaptureGallery({
     return (
       <div
         data-testid="empty-gallery"
-        className="border-border text-muted flex flex-col items-center gap-2 rounded-xl border border-dashed px-6 py-12 text-center"
+        className="border-border text-muted flex flex-col items-center gap-2 rounded-xl border border-dashed px-4 py-10 text-center text-sm sm:px-6 sm:py-12 sm:text-base"
       >
         <ImageIcon className="size-8" />
         <p>Aún no hay capturas. Pega una imagen del portapapeles.</p>
@@ -96,7 +96,7 @@ export function CaptureGallery({
         </div>
       </div>
 
-      <ul className={cn("grid gap-6", GRID_COLS[columns])}>
+      <ul className={cn("grid gap-4 sm:gap-6", GRID_COLS[columns])}>
         {captures.map((capture) => (
           <li
             key={capture.id}

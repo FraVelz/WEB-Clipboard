@@ -74,7 +74,7 @@ export function CaptureComposer({ onSave }: CaptureComposerProps) {
   }
 
   return (
-    <section className="border-border bg-surface rounded-xl border p-4">
+    <section className="border-border bg-surface rounded-xl border p-3 sm:p-4">
       <label htmlFor="capture-title" className="block text-sm font-medium">
         Título (opcional)
       </label>
@@ -88,7 +88,7 @@ export function CaptureComposer({ onSave }: CaptureComposerProps) {
           placeholder="Escribe un título y pega la captura"
           disabled={busy}
           className={cn(
-            "border-border bg-bg text-text min-w-0 flex-1 rounded-lg border px-3 py-2",
+            "border-border bg-bg text-text min-w-0 flex-1 rounded-lg border px-3 py-2.5 text-base sm:py-2 sm:text-sm",
             "placeholder:text-muted",
           )}
         />
@@ -97,14 +97,20 @@ export function CaptureComposer({ onSave }: CaptureComposerProps) {
           data-testid="paste-button"
           onClick={() => void onPasteClick()}
           disabled={busy}
-          className="bg-accent inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 font-medium text-white hover:opacity-90 disabled:opacity-60"
+          className="bg-accent inline-flex min-h-11 items-center justify-center gap-2 rounded-lg px-4 py-2.5 font-medium text-white hover:opacity-90 disabled:opacity-60 sm:min-h-0 sm:py-2"
         >
           <ClipboardPasteIcon className="size-4" />
           Pegar
         </button>
       </div>
       <p className="text-muted mt-2 text-sm">
-        Pega con Ctrl+V o Cmd+V. Si el título está vacío, se guarda sin título.
+        <span className="sm:hidden">
+          Pega desde el portapapeles. Si el título está vacío, se guarda sin
+          título.
+        </span>
+        <span className="hidden sm:inline">
+          Pega con Ctrl+V o Cmd+V. Si el título está vacío, se guarda sin título.
+        </span>
       </p>
       {message ? (
         <p className="text-muted mt-2 text-sm" role="status">

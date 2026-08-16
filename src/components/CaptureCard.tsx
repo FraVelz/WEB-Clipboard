@@ -264,7 +264,7 @@ export function CaptureCard({
           <img
             src={src}
             alt={capture.title || "Captura sin título"}
-            className="mx-auto h-auto max-h-[28rem] w-auto max-w-full object-contain"
+            className="mx-auto h-auto max-h-64 w-auto max-w-full object-contain sm:max-h-[28rem]"
           />
         ) : (
           <div className="bg-bg min-h-40" />

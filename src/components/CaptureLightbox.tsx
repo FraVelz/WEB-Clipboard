@@ -64,8 +64,8 @@ export function CaptureLightbox({ capture, onClose }: CaptureLightboxProps) {
     >
       {capture && src ? (
         <>
-          <div className="pointer-events-none absolute inset-x-0 top-0 z-20 flex items-start justify-between gap-3 p-3">
-            <div className="bg-surface/90 text-muted pointer-events-none max-w-[50%] rounded-lg px-3 py-2 text-sm backdrop-blur">
+          <div className="pointer-events-none absolute inset-x-0 top-0 z-20 flex flex-col gap-2 p-2 pt-[max(0.5rem,env(safe-area-inset-top))] sm:flex-row sm:items-start sm:justify-between sm:gap-3 sm:p-3">
+            <div className="bg-surface/90 text-muted pointer-events-none max-w-full min-w-0 rounded-lg px-3 py-2 text-sm backdrop-blur sm:max-w-[min(50%,24rem)]">
               <p className="text-text truncate font-medium">
                 {capture.title || "Sin título"}
               </p>
@@ -76,9 +76,9 @@ export function CaptureLightbox({ capture, onClose }: CaptureLightboxProps) {
               </p>
             </div>
 
-            <div className="pointer-events-auto flex flex-wrap items-center justify-end gap-1">
+            <div className="pointer-events-auto flex flex-wrap items-center gap-1 self-end sm:justify-end">
               <div
-                className="bg-surface/95 border-border flex items-center gap-1 rounded-lg border p-1 shadow-lg backdrop-blur"
+                className="bg-surface/95 border-border flex items-center gap-0.5 rounded-lg border p-1 shadow-lg backdrop-blur sm:gap-1"
                 role="toolbar"
                 aria-label="Controles de zoom"
               >
@@ -181,9 +181,14 @@ export function CaptureLightbox({ capture, onClose }: CaptureLightboxProps) {
             </div>
           </div>
 
-          <p className="text-muted pointer-events-none absolute inset-x-0 bottom-3 z-20 text-center text-xs">
-            Arrastra la imagen para moverla · rueda suave o pellizco para zoom ·
-            botones o +/− en el teclado
+          <p className="text-muted pointer-events-none absolute inset-x-0 bottom-3 z-20 px-3 pb-[env(safe-area-inset-bottom)] text-center text-xs">
+            <span className="sm:hidden">
+              Arrastra para mover · pellizca para zoom
+            </span>
+            <span className="hidden sm:inline">
+              Arrastra la imagen para moverla · rueda suave o pellizco para zoom ·
+              botones o +/− en el teclado
+            </span>
           </p>
         </>
       ) : null}

@@ -13,10 +13,12 @@ export function ClipboardApp() {
   const [open, setOpen] = useState<CaptureRecord | null>(null);
 
   return (
-    <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-8 px-4 py-10">
+    <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-6 px-3 py-6 sm:gap-8 sm:px-4 sm:py-10">
       <header>
-        <h1 className="text-3xl font-semibold tracking-tight">WEB-Clipboard</h1>
-        <p className="text-muted mt-1">
+        <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
+          WEB-Clipboard
+        </h1>
+        <p className="text-muted mt-1 text-sm sm:text-base">
           Pega capturas del portapapeles. Se guardan solo en este navegador.
           Arrastra el asa para reordenar.
         </p>
